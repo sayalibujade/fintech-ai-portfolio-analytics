@@ -1,0 +1,25 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+
+    max-height: 100vh;
+    box-sizing: border-box;
+
+    overflow-x: auto;
+    overflow-y: auto;
+    background-color: #f8fafc;
+
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+*, *::before, *::after {
+    box-sizing: inherit;
+}
+
+.container, .container-fluid, .row {
+    max-width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+}

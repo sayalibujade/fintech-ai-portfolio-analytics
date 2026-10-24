@@ -1,0 +1,100 @@
+<div class="container pb-4 pt-2">
+    <div class="mb-4">
+        <h1 class="h3 m-0 fw-bold text-dark">Market Intelligence Hub</h1>
+        <small class="text-muted">High-level financial summaries and chronological asset operations ledger tracking metrics.</small>
+    </div>
+
+    @if (isDataLoading()) {
+        <div class="text-center my-5 py-5 bg-white border rounded shadow-sm">
+            <div class="spinner-border text-primary" role="status"></div>
+            <p class="text-muted mt-2">Aggregating live ledger datasets...</p>
+        </div>
+    }
+
+    @if (errorLog()) {
+        <div class="alert alert-danger mb-4" role="alert">
+            <strong>Core Exception Warning:</strong> {{ errorLog() }}
+        </div>
+    }
+
+    @if (!isDataLoading()) {
+        <!-- 1. METRIC SUMMARY CARDS GRID -->
+        <div class="row g-3 mb-4">
+            <div class="col-md-4">
+                <div class="card p-3 border-0 bg-white shadow-sm">
+                    <small class="text-muted text-uppercase tracking-wider">Net Equity Valuation</small>
+                    <h3 class="m-0 mt-1 fw-bold text-dark">${{ totalValue() | number:'1.2-2' }}</h3>
+                </div>
+            </div>
+
+             <div class="col-md-4">
+                <div class="card p-3 border-0 bg-white shadow-sm">
+                    <small class="text-muted text-uppercase tracking-wider">Net Investment Return</small>
+                    <h3 class="m-0 mt-1 fw-bold" [ngClass]="profitLoss() >= 0 ? 'metric-positive' : 'metric-negative'">
+                        ${{ profitLoss() | number:'1.2-2' }}
+                        <span clas="fs-6 fw-normal">({{ profitLossPercentage() | number:'1.2-2' }}%)</span>
+                    </h3>
+                </div>
+            </div>
+
+             <div class="col-md-4">
+                <div class="card p-3 border-0 bg-white shadow-sm">
+                    <small class="text-muted text-uppercase tracking-wider">Active Asset Lines</small>
+                    <h3 class="m-0 mt-1 fw-bold text-secondary">${{ holdingsCount() }} Positions</h3>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. NEW REAL-TIME LIVE MARKET STREAM CHART LAYER -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <app-dashboard-chart></app-dashboard-chart>
+            </div>
+        </div>
+
+        <!-- 3. RECENT ACTIVITY LOG CARD LAYER -->
+        <div class="card border-0 bg-white shadow-sm overflow-hidden mb-5">
+            <div class="card-header bg-white border-0 pt-4 px-4 d-flex justify-content-between align-items-center">
+                <h5 class="m-0 fw-bold text-dark">Recent Activity Log</h5>
+                <a routerLink="/transactions" class="btn btn-sm btn-history shadow-none">View Full History</a>
+            </div>
+
+            <div class="table-responsive p-3">
+                <table class="table table-hover align-middle m-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th class="px-3 small">Date</th>
+                            <th class="small">Ticker</th>
+                            <th class="small">Auction</th>
+                            <th class="small">Units</th>
+                            <th class="small text-end px-3">Valuation</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (ticket of recentActivity(); track ticket._id) {
+                            <tr>
+                                <td class="px-3 text-muted small">{{ ticket.date | date:'shortTime' }}</td>
+                                <td class="fw-bold text-uppercase text-dark">{{ ticket.symbol }}</td>
+                                <td>
+                                    <!-- Decoupled dynamic execution side tags -->
+                                     <span class="badge rounded-pill fw-semibold border px-2.5 py-1 text-uppercase"
+                                        [ngClass]="ticket.type === 'BUY' ? 'badge-buy' : 'badge-sell'">
+                                        {{ ticket.type }}
+                                    </span>
+                                </td>
+                                <td class="fw-medium text-secondary">{{ ticket.shares | number:'1.0-2' }}</td>
+                                <td class="text-end px-3 fw-bold text-dark">{{ (ticket.shares * ticket.price) | number:'1.2-2' }}</td>
+                            </tr>
+                        } @empty {
+                            <tr>
+                                <td colspan="5" class="text-center py-4 text-muted small">
+                                    📋 No recent trade actions found inside database logs. Hitting the portfolio cockpit unblocks view mappings.
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+</div>

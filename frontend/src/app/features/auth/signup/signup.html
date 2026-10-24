@@ -1,0 +1,203 @@
+<!-- <div class="row justify-content-center">
+    <div class="col-12 col-md-6 col-lg-4">
+    <h3 class="text-center mb-3">Signup Form</h3>
+        <form [formRoot]="signupForm">
+            <div>
+                <label for="firstName" class="form-label text-secondary small">First Name</label>
+                <input
+                    type="text"
+                    id="firstName"
+                    [formField]="signupForm.firstName"
+                    class="form-control form-control-sm"
+                    [class.is-invalid]="signupForm.firstName().invalid() && signupForm.firstName().touched()"
+                    placeholder="Enter your first name" />
+                    @if (signupForm.firstName().invalid() && signupForm.firstName().touched()) {
+                        <div class="invalid-feedback d-block">
+                            @for (error of signupForm.firstName().errors(); track error.kind) {
+                                <div>{{error.message}}</div>
+                            }
+                        </div>
+                    }
+            </div>
+            <div>
+                <label for="lastName" class="form-label text-secondary small">Last Name</label>
+                <input
+                    type="text"
+                    id="lastName"
+                    [formField]="signupForm.lastName"
+                    class="form-control form-control-sm"
+                    [class.is-invalid]="signupForm.lastName().invalid() && signupForm.lastName().touched()"
+                    placeholder="Enter your last name" />
+                     @if (signupForm.lastName().invalid() && signupForm.lastName().touched()) {
+                        <div class="invalid-feedback d-block">
+                            @for (error of signupForm.lastName().errors(); track error.kind) {
+                                <div>{{error.message}}</div>
+                            }
+                        </div>
+                    }
+            </div>
+            <div>
+                <label for="email" class="form-label text-secondary small">Email</label>
+                <input
+                    type="text"
+                    id="email"
+                    [formField]="signupForm.email"
+                    class="form-control form-control-sm"
+                    [class.is-invalid]="signupForm.email().invalid() && signupForm.email().touched()"
+                    placeholder="Enter your email" />
+                     @if (signupForm.email().invalid() && signupForm.email().touched()) {
+                        <div class="invalid-feedback d-block">
+                            @for (error of signupForm.email().errors(); track error.kind) {
+                                <div>{{error.message}}</div>
+                            }
+                        </div>
+                    }
+            </div>
+            <div>
+                <label for="password" class="form-label text-secondary small">Password</label>
+                <input
+                    type="password"
+                    id="password"
+                    [formField]="signupForm.password"
+                    class="form-control form-control-sm"
+                    [class.is-invalid]="signupForm.password().invalid() && signupForm.password().touched()"
+                    placeholder="Enter your password " />
+                    @if (signupForm.password().invalid() && signupForm.password().touched()) {
+                        <div class="invalid-feedback d-block">
+                            @for (error of signupForm.password().errors(); track error.kind) {
+                                <div>{{error.message}}</div>
+                            }
+                        </div>
+                    }
+            </div> -->
+            <!-- Server Error notification -->
+            <!-- @if (serverError()) {
+            <div class="alert alert-danger p-2 mt-2 small" role="alert">{{serverError()}}</div>
+            } -->
+
+            <!-- Server Success notification -->
+            <!-- @if (signupSuccessMsg()) {
+                <div class="alert alert-success p-2 mt-2 small" role="alert">{{signupSuccessMsg()}}</div>
+            }
+
+            <div class="mt-2">
+                <button
+                    type="submit"
+                    [disabled]="isFormInvalid() || isSubmitting() || signupSuccessMsg()"
+                    class="btn btn-primary py-2 fw-semibold">
+                    @if (isSubmitting()) {
+                        <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                        Registering...
+                    } @else {
+                        Sign Up
+                    }
+                </button>
+            </div>
+            <div class="text-center">
+                <span class="text-secondary small">Already have account? </span>
+                <a [routerLink]="['../login']" class="text-primary small text-decoration-none fw-medium">Login</a>
+            </div>
+        </form>
+    </div>
+</div> -->
+
+<div class="auth-card-inner">
+    <h3 class="text-center mb-3">Signup Form</h3>
+    <form [formRoot]="signupForm" class="d-flex flex-column gap-3">
+        <div>
+            <label for="firstName" class="form-label text-secondary small fw-semibold">First Name</label>
+            <input
+                type="text"
+                id="firstName"
+                [formField]="signupForm.firstName"
+                class="form-control"
+                [class.is-invalid]="signupForm.firstName().invalid() && signupForm.firstName().touched()"
+                placeholder="Enter your first name" />
+                
+                @if (signupForm.firstName().invalid() && signupForm.firstName().touched()) {
+                    <div class="invalid-feedback d-block mt-1">
+                        @for (error of signupForm.firstName().errors(); track error.kind) {
+                            <div class="small">{{error.message}}</div>
+                        }
+                    </div>
+                }
+        </div>
+        <div>
+            <label for="lastName" class="form-label text-secondary small fw-semibold">Last Name</label>
+            <input
+                type="text"
+                id="lastName"
+                [formField]="signupForm.lastName"
+                class="form-control"
+                [class.is-invalid]="signupForm.lastName().invalid() && signupForm.lastName().touched()"
+                placeholder="Enter your last name" />
+                @if (signupForm.lastName().invalid() && signupForm.lastName().touched()) {
+                    <div class="invalid-feedback d-block mt-1">
+                        @for (error of signupForm.lastName().errors(); track error.kind) {
+                            <div>{{error.message}}</div>
+                        }
+                    </div>
+                }
+        </div>
+        <div>
+            <label for="email" class="form-label text-secondary small fw-semibold">Email</label>
+            <input
+                type="text"
+                id="email"
+                [formField]="signupForm.email"
+                class="form-control"
+                [class.is-invalid]="signupForm.email().invalid() && signupForm.email().touched()"
+                placeholder="Enter your email" />
+                @if (signupForm.email().invalid() && signupForm.email().touched()) {
+                    <div class="invalid-feedback d-block mt-1">
+                        @for (error of signupForm.email().errors(); track error.kind) {
+                            <div class="small">{{error.message}}</div>
+                        }
+                    </div>
+                }
+        </div>
+        <div>
+            <label for="password" class="form-label text-secondary small fw-semibold">Password</label>
+            <input
+                type="password"
+                id="password"
+                [formField]="signupForm.password"
+                class="form-control"
+                [class.is-invalid]="signupForm.password().invalid() && signupForm.password().touched()"
+                placeholder="Enter your password " />
+                @if (signupForm.password().invalid() && signupForm.password().touched()) {
+                    <div class="invalid-feedback d-block mt-1">
+                        @for (error of signupForm.password().errors(); track error.kind) {
+                            <div class="small">{{error.message}}</div>
+                        }
+                    </div>
+                }
+        </div>
+        <!-- Server Error notification -->
+        @if (serverError()) {
+            <div class="alert alert-danger p-2 mt-2 small" role="alert">{{serverError()}}</div>
+        }
+        <!-- Server Success notification -->
+        @if (signupSuccessMsg()) {
+            <div class="alert alert-success p-2 mt-2 small" role="alert">{{signupSuccessMsg()}}</div>
+        }
+
+        <div class="mt-2">
+            <button
+                type="submit"
+                [disabled]="isFormInvalid() || isSubmitting() || signupSuccessMsg()"
+                class="btn btn-primary w-100 py-2.5 fw-semibold shadow-sm">
+                @if (isSubmitting()) {
+                    <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                    Registering...
+                } @else {
+                    Sign Up
+                }
+            </button>
+        </div>
+        <div class="text-center">
+            <span class="text-secondary small">Already have account? </span>
+            <a [routerLink]="['/auth/login']" class="text-primary small text-decoration-none fw-semibold">Login</a>
+        </div>
+    </form>
+</div>

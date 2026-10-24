@@ -1,0 +1,79 @@
+<div class="ai-insights-container">
+    <header class="ai-header">
+        <h2>🤖 AI Portfolio Insights</h2>
+        <p class="subtitle">Contexual risk modeling and portfolio optimization powered by Gemini</p>
+    </header>
+
+    <section class="tab-section">
+        <label class="section-label">Select Workspace Context:</label>
+        <div class="portfolio-tabs">
+            @for (portfolio of portfolios(); track portfolio.id) {
+                <button
+                    type="button"
+                    [class.active]="portfolio.id === selectedPortfolioId()"
+                    [disabled]="isLoading()"
+                    (click)="selectPortfolio(portfolio.id)">
+                    {{ portfolio.name }}
+                </button>
+            }
+        </div>
+
+        @if (activePortfolio(); as active) {
+            <div class="portfolio-meta-bar">
+                <span class="badge">{{ active.holdings.length }} Assets Loaded</span>
+                <span class="meta-description">{{ active.description }}</span>
+            </div>
+        }
+    </section>
+
+    <section class="suggestions-section">
+        <span class="section-label">Suggested Analyses:</span>
+        <div class="suggestions-grid">
+            @for (sampleQuestion of sampleQuestions(); track sampleQuestion) {
+                <button
+                    type="button"
+                    class="suggestion-btn"
+                    [disabled]="isLoading()"
+                    (click)="askAi(sampleQuestion)">
+                    {{ sampleQuestion }}
+                </button>
+            }
+        </div>
+    </section>
+
+    <main class="response-viewport">
+        @if (isLoading()) {
+            <div class="skeleton-wrapper">
+                <div class="skeleton-line shimmer header"></div>
+                <div class="skeleton-line shimmer long"></div>
+                <div class="skeleton-line shimmer medium"></div>
+                <div class="skeleton-line shimmer short"></div>
+            </div>
+        } @else if (aiResponse()) {
+            <article class="analysis-content" [innerHTML]="aiResponse() | markdown"></article>
+        } @else {
+            <div class="empty-state">
+                <div class="empty-icon">📊</div>
+                <p>Select a quick-click suggested inquiry or type a custom query below to run real-time contexual financial modeling.</p>
+            </div>
+        }
+    </main>
+
+    <footer class="input-action-bar">
+        <div class="input-wrapper">
+            <input
+                type="text"
+                [(ngModel)]="customQuery"
+                placeholder="Ask about sector exposures, PnL corrections, or rebalancing strategy..."
+                [disabled]="isLoading()"
+                (keyup.enter)="customQuery().trim() && askAi(customQuery())" />
+            <button
+                type="button"
+                class="execute-btn"
+                [disabled]="isLoading() || !customQuery().trim()"
+                (click)="askAi(customQuery())">
+                Analyze Worksapce
+            </button>
+        </div>
+    </footer>
+</div>

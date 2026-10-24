@@ -1,0 +1,38 @@
+<div class="container py-4">
+    <div class="mb-4">
+    <h1 class="h3 m-0">Transaction History</h1>
+    <small class="text-muted">Review full chronological audit sheets for all your logged trade tickets.</small>
+    </div>
+
+    @if (isLoading()) {
+        <div class="text-center my-5 py-5 bg-white border rounded shadow-sm">
+            <div class="spinner-border text-primary" role="status"></div>
+            <p class="text-muted mt-2">Syncing historical ledger log matrix...</p>
+        </div>
+    }
+
+    @if (error()) {
+        <div class="alert alert-danger mb-4" role="alert">
+            <strong>Ledger Error:</strong> {{error()}}
+        </div>
+    }
+
+    @if (!isLoading()) {
+        <div class="row g-3 mb-4">
+            <div class="col-md-6">
+                <div class="card p-3 border-0 bg-white shadow-sm">
+                    <small class="text-muted text-uppercase">Total Orders Logged</small>
+                    <h4 class="m-0 mt-1 fw-bold text-dark"> {{ count() }} Tickets</h4>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card p-3 border-0 bg-white shadow-sm">
+                    <small class="text-muted text-uppercase">Total Volume Exchanged</small>
+                    <h4 class="m-0 mt-1 fw-bold text-secondary"> {{ volume() | number:'1.2-2' }}</h4>
+                </div>
+            </div>
+        </div>
+
+        <app-transaction-table [orders]="orders()"></app-transaction-table>
+    }
+</div>

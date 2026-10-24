@@ -1,0 +1,14 @@
+<div class="workspace-wrapper">
+    <!-- 1. Left sidebar fixed navigation section -->
+    <app-sidebar></app-sidebar>
+
+    <!-- 2. Right dynamic viewport panel -->
+    <div class="viewport-panel">
+        <app-header></app-header>
+
+        <main class="page-content">
+            <!-- Secured dynamic dashboard child routes render directly here -->
+             <router-outlet></router-outlet>
+        </main>
+    </div>
+</div>

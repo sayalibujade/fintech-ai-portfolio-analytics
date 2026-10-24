@@ -1,0 +1,78 @@
+<div class="container py-4">
+  
+  <!-- Header Toolbar Row -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <h1 class="h3 m-0 fw-bold text-dark">Portfolio Analytics Studio</h1>
+      <small class="text-muted">AI-Powered real-time macro-metrics and asset distribution maps.</small>
+    </div>
+    <button class="btn btn-primary shadow-sm fw-semibold" (click)="openTradeModal()">+ New Order</button>
+  </div>
+
+  @if (store.isLoading()) {
+    <div class="text-center my-5 py-5 bg-white border rounded shadow-sm">
+      <div class="spinner-border text-primary" role="status"></div>
+      <p class="text-muted mt-2">Synchronizing asset ledger nodes...</p>
+    </div>
+  } @else {
+      <!-- 1. DETACHED MODULAR SUMMARY STAT CARDS -->
+    <div class="row g-3 mb-4">
+      <div class="col-md-4">
+        <app-summary-card label="Gross Valuation" [value]="store.totalPortfolioValue()"></app-summary-card>
+      </div>
+      <div class="col-md-4">
+        <app-summary-card label="Investment Principal" [value]="store.totalInvestmentCost()"></app-summary-card>
+      </div>
+      <div class="col-md-4">
+        <app-profit-loss-card [amount]="netPnL()" [percentage]="store.netProfitLossPercentage()"></app-profit-loss-card>
+      </div>
+    </div>
+
+    <!-- 2. SPLIT ROW: GRAPH VS DETAILED TABULAR LEDGER -->
+    <div class="row g-4 mb-5">
+      <div class="col-12 col-lg-4">
+        <div class="card p-4 border-0 bg-white shadow-sm h-100 text-dark chart-card-container">
+          <small class="text-muted text-uppercase fw-bold mb-3 d-block chart-header-text">Asset Distribution</small>
+
+          @if (store.activeHoldings().length > 0) {
+           <apx-chart
+                [series]="chartSeries()"
+                [chart]="chartConfig()"
+                [labels]="chartLabels()"
+                [colors]="chartColors"
+                [legend]="chartLegend"
+                [plotOptions]="plotOptions"
+                [dataLabels]="dataLabels">
+            </apx-chart>
+          } @else {
+            <div class="text-center py-5 text-muted small">
+                 <span class="fs-3 d-block mb-2">📊</span>
+              No data assets available to plot weight graphs.
+            </div>
+          }
+        </div>
+      </div>
+
+      <div class="col-12 col-lg-8">
+        <app-holding-table [holdings]="store.activeHoldings()"></app-holding-table>
+      </div>
+
+    </div>
+  }
+
+  @if (isModalOpen()) {
+    <div class="modal fade show d-block" tabindex="-1" style="background: rgba(0, 0, 0, 0.55);" role="dialog">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content border-0 shadow-lg p-3">
+          <div class="modal-header border-0 pb-0">
+            <h5 class="modal-title fw-bold text-dark">Book Fresh Market Order</h5>
+            <button type="button" class="btn-close" (click)="closeTradeModal()" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <app-add-transaction></app-add-transaction>
+          </div>
+        </div>
+      </div>
+    </div>
+  }
+</div>

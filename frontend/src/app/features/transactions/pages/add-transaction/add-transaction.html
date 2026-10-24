@@ -1,0 +1,85 @@
+<form [formGroup]="transactionForm" (ngSubmit)="handleOrderSubmission()" class="transaction-form p-1">
+  <div class="mb-3">
+    <label class="section-label">Asset Ticker</label>
+    <input
+      type="text"
+      class="form-control form-control-custom"
+      placeholder="E.g. TSLA, AAPL, NVDA"
+      formControlName="ticker" />
+    @if (transactionForm.get('ticker')?.touched && transactionForm.get('ticker')?.invalid) {
+      <div class="text-danger small mt-1">Valid asset ticker name is required.</div>
+    }
+  </div>
+
+  <div class="mb-3">
+    <label class="section-label">Order Action</label>
+    <div class="segmented-control-wrapper d-flex p-1">
+      <button
+        type="button"
+        class="btn segmented-segment flex-fill"
+        [class.active-buy]="orderType() === 'BUY'"
+        (click)="setOrderType('BUY')">
+        Buy
+      </button>
+      <button
+        type="button"
+        class="btn segmented-segment flex-fill"
+        [class.active-sell]="orderType() === 'SELL'"
+        (click)="setOrderType('SELL')">
+        Sell
+      </button>
+    </div>
+  </div>
+
+  <div class="row g-3 mb-4">
+    <div class="col-6">
+      <label class="section-label">Shares</label>
+      <input
+        type="number"
+        class="form-control form-control-custom"
+        placeholder="0"
+        formControlName="quantity" />
+      @if (transactionForm.get('quantity')?.touched && transactionForm.get('quantity')?.invalid) {
+        <div class="text-danger small mt-1">Minimum 1 share required.</div>
+      }
+    </div>
+    <div class="col-6">
+      <label class="section-label">Limit Price</label>
+      <div class="input-group input-group-custom">
+        <span class="input-group-text">$</span>
+        <input
+          type="number"
+          class="form-control form-control-custom"
+          placeholder="0.00"
+          step="0.01"
+          formControlName="price" />
+      </div>
+      @if (transactionForm.get('price')?.touched && transactionForm.get('price')?.invalid) {
+        <div class="text-danger small mt-1">Valid entry limit price is required.</div>
+      }
+    </div>
+  </div>
+
+  <div class="estimated-panel mb-4">
+    <span class="estimated-label">Estimated Value</span>
+    <span class="estimated-value">{{ totalCostEstimated() | currency:'USD' }}</span>
+  </div>
+
+  @if (store.error()) {
+    <div class="alert alert-danger border-0 small py-2 mb-3" role="alert">
+      {{ store.error() }}
+    </div>
+  }
+
+  <button
+    type="submit"
+    class="btn btn-primary w-100 submit-btn text-uppercase"
+    [disabled]="transactionForm.invalid || store.isLoading()">
+    @if (store.isLoading()) {
+      <span class="spinner-border spinner-border-sm me-2" role="status"></span>
+      Routing Order...
+    } @else {
+      Confirm Execution
+    }
+  </button>
+</form>

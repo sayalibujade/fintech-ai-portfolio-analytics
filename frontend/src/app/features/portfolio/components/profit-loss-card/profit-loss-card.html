@@ -1,0 +1,7 @@
+<div class="card p-3 border-0 bg-white shadow-sm custom-stat-card">
+  <small class="text-muted text-uppercase tracking-wider font-semibold custom-label">Net Return</small>
+  <h3 class="m-0 mt-1 fw-bold custom-valuation" [ngClass]="isPositive() ? 'text-success' : 'text-danger'">
+    ${{ amount() | number:'1.2-2' }}
+    <span class="fs-6 fw-normal text-secondary custom-badge">({{ percentage() | number:'1.2-2' }}%)</span>
+  </h3>
+</div>

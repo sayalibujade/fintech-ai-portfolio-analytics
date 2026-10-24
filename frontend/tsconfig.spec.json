@@ -1,0 +1,17 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "types": [
+      "jest",
+      "node"
+    ],
+    "noUncheckedSideEffectImports": false,
+    "esModuleInterop": true
+  },
+  "include": [ 
+    "src/**/*.spec.ts",
+    "src/**/*.d.ts",
+    "setup-jest.ts",
+    "jest.config.ts"
+  ]
+}

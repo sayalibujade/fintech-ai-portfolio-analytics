@@ -1,0 +1,15 @@
+<header class="top-header">
+  <div class="status-pill">
+    <span class="pulse-dot"></span>
+    <span class="status-text">Core Ledger Operational</span>
+  </div>
+
+  <div class="user-control">
+    <span class="welcome">
+      Welcome, <strong class="user-email">{{ fullName() || 'Trader' }}</strong>
+    </span>
+    <button class="logout-btn" (click)="onLogout()">
+      <span>Logout</span> 🚪
+    </button>
+  </div>
+</header>

@@ -1,0 +1,19 @@
+<div class="chart-card-container">
+    <header class="chart-widget-header">
+        <div class="title-block">
+            <span class="pulse-indicator"></span>
+            <h4>⚡Real Time Asset monitor</h4>
+        </div>
+        <p class="subtitle">Streaming live market events over abstract provider configurations using native SSE</p>
+    </header>
+
+    <main class="chart-viewport-workspace">
+        <apx-chart #marketChart
+            [series]="chartSeries"
+            [chart]="chartOptions.chart"
+            [xaxis]="chartOptions.xaxis"
+            [stroke]="chartOptions.stroke"
+            [title]="chartOptions.title">
+        </apx-chart>
+    </main>
+</div>
